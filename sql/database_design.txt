@@ -1,0 +1,12 @@
+用户表
+表名：user
+id：主键
+username：用户名，唯一，不可为空
+password：密码，不可为空
+QQ：QQ号，不可为空
+Signature：个性签名
+header：头像的URL，有默认项
+sex：性别，1为男，2为女，0为保密
+class：1-20班，0为保密
+grade：1-3年纪，0为保密
+real_name:真实姓名，为空保密
