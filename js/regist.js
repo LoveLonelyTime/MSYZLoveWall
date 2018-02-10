@@ -1,18 +1,18 @@
 var usernameVerification = false,QQVerification = false,passwordVerification = false,confirmPasswordVerification = false;
 
 function showInvalid(prefix,msg){
-	$("#" + prefix + 'Input').addClass('is-invalid');
-	$("#" + prefix + 'Help').addClass('invalid-feedback');
-	$("#" + prefix + 'Help').removeClass('text-muted');
-	$("#" + prefix + 'Help').text(msg);
+	$('#' + prefix + 'Input').addClass('is-invalid');
+	$('#' + prefix + 'Help').addClass('invalid-feedback');
+	$('#' + prefix + 'Help').removeClass('text-muted');
+	$('#' + prefix + 'Help').text(msg);
 }
 
 function showValid(prefix,msg){
-	$("#" + prefix + 'Input').removeClass('is-invalid');
-	$("#" + prefix + 'Input').addClass('is-valid');
-	$("#" + prefix + 'Help').removeClass('invalid-feedback');
-	$("#" + prefix + 'Help').addClass('valid-feedback');
-	$("#" + prefix + 'Help').text(msg);
+	$('#' + prefix + 'Input').removeClass('is-invalid');
+	$('#' + prefix + 'Input').addClass('is-valid');
+	$('#' + prefix + 'Help').removeClass('invalid-feedback');
+	$('#' + prefix + 'Help').addClass('valid-feedback');
+	$('#' + prefix + 'Help').text(msg);
 }
 
 function showModal(title,content){
@@ -25,7 +25,6 @@ function validateUsername(){
 	var inputValue = $('#usernameInput').val();
 	if(inputValue.length > 0 && inputValue.length < 50){
 		if(/^[\u4E00-\u9FA5A-Za-z0-9_]+$/.test(inputValue)){
-			//TODO Verifying the uniqueness of the username
 			showValid('username','符合要求');
 			usernameVerification = true;
 		}else{
@@ -93,7 +92,7 @@ function doRegist(){
 	validateConfirmPassword();
 	if(usernameVerification && QQVerification && passwordVerification && confirmPasswordVerification){
 		$.ajax({
-			url:'handler/registHandler.php',
+			url:'/handler/registHandler.php',
 			type:'POST',
 			dataType:'json',
 			data:{
@@ -104,7 +103,7 @@ function doRegist(){
 			success:function(json){
 				if(json.result === "success"){
 					showModal('注册成功','马上带你进入登录页面');
-					window.location.href = 'login.php';
+					setTimeout("window.location.href = '/login.php'",3000);
 				}else if(json.result === "input_error"){
 					showInvalid(json.field,json.description);
 				}else if(json.result === "error"){

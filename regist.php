@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html>
 	<head>
@@ -55,7 +56,7 @@
 					</div>
 					<div id="resultModalContent" class="modal-body"></div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					</div>
 				</div>
 			</div>

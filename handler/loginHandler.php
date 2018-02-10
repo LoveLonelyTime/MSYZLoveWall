@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../setting/database.php";
 header('Content-Type:application/json');
 function validateUsername($value){
@@ -11,14 +12,6 @@ function validateUsername($value){
 		}
 	}else{
 		echo json_encode(array("result" => "input_error","field" => "username","description" => "用户名的长度应在0到50位之间"));
-		return false;
-	}
-}
-function validateQQ($value){
-	if(preg_match("/^[1-9]\d{4,10}$/",$value)){
-		return true;
-	}else{
-		echo json_encode(array("result" => "input_error","field" => "QQ","description" => "你输入的QQ不合格格式"));
 		return false;
 	}
 }
@@ -35,31 +28,22 @@ function validatePassword($value){
 		return false;
 	}
 }
-function checkUsernameUnique($value){
-	$result = mysql_query("SELECT * FROM user WHERE username = '$value'");
-	if(mysql_num_rows($result)==0){
-		return true;
-	}else{
-		return false;
-	}
-}
 $username = $_POST["username"];
 $password = $_POST["password"];
-$QQ = $_POST["QQ"];
-if(validateUsername($username) && validateQQ($QQ) && validatePassword($password)){
+
+if(validateUsername($username) && validatePassword($password)){
 	$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
 	if($connection){
 		mysql_set_charset('utf8');
 		mysql_select_db("msyzlovewall", $connection);
-		if(checkUsernameUnique($username)){
-			$md5_password = md5($password);
-			if(mysql_query("INSERT INTO user (username,password,QQ) VALUES ('$username','$md5_password', '$QQ')")){
-				echo json_encode(array("result" => "success"));
-			}else{
-				echo json_encode(array("result" => "error","description" => "数据库连接失败"));
-			}
+		$md5_password = md5($password);
+		$result = mysql_query("SELECT id,password FROM user WHERE username = '$username'");
+		$row = mysql_fetch_array($result);
+		if($row["password"] === $md5_password){
+			$_SESSION["user"] = $row["id"];
+			echo json_encode(array("result" => "success"));
 		}else{
-			echo json_encode(array("result" => "input_error","field" => "username","description" => "该用户名已被注册"));
+			echo json_encode(array("result" => "error","description" => "该用户不存在或密码错误"));
 		}
 	}else{
 		echo json_encode(array("result" => "error","description" => "数据库连接失败"));

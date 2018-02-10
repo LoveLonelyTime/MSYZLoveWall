@@ -1,0 +1,9 @@
+.box-shadow{
+	box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+main{
+	margin-top:7em;
+}
+#headerImage{
+	margin-top:-5em;
+}

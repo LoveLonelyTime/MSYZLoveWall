@@ -1,7 +1,8 @@
+<?php include "setting/database.php"; ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<!-- Brand -->
-	<a class="navbar-brand" href="#">
-		<img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo"/>
+	<a class="navbar-brand" href="/index.php">
+		<img src="/img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="Logo"/>
 		密山一中表白墙 Love For You
 	</a>
 	<!-- Toggler Button -->
@@ -21,5 +22,41 @@
 				<a class="nav-link color-transition" href="#"><i class="fas fa-at"></i>关于TA</a>
 			</li>
 		</ul>
+		<?php 
+		if(isset($_SESSION['user'])){
+		?>
+		<!-- User -->
+		<span class="navbar-text">
+			<?php 
+			$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
+			if($connection){
+				mysql_set_charset('utf8');
+				mysql_select_db("msyzlovewall", $connection);
+				$id = $_SESSION['user'];
+				$result = mysql_query("SELECT username,header FROM user WHERE id = $id");
+				$row = mysql_fetch_array($result);
+				$username = $row['username'];
+				$header = $row['header'];
+			?>
+			<a class="mr-3" href="#">
+				<img src=<?php echo $header; ?> alt="Header" class="rounded-circle" width="30" height="30"/>
+				<span><?php echo $username; ?></span>
+			</a>
+			<?php
+			}
+			mysql_close($connection);
+			?>
+			<a href="/handler/logoutHandler.php"><i class="fas fa-sign-out-alt"></i>登出</a>
+		</span>
+		<?php 
+		}else{
+		?>
+		<!-- Login -->
+		<span class="navbar-text">
+			<a href="/login.php"><i class="fas fa-sign-in-alt"></i>登录</a>
+		</span>
+		<?php 
+		}
+		?>
 	</div>
 </nav>
