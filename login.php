@@ -1,9 +1,12 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include "setting/database.php";
+?>
 <!doctype html>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 		<!-- Login CSS -->
@@ -22,6 +25,10 @@
 				<input type="text" id="usernameInput" class="form-control" placeholder="用户名" autofocus="autofocus"/>
 				<input type="password" id="passwordInput" class="form-control" placeholder="密码"/>
 				<button class="btn btn-lg btn-outline-primary btn-block" type="button" onclick="doLogin()">登录</button>
+				<ul class="list-inline">
+					<li class="list-inline-item"><a href="/regist.php">没有帐号？立即注册</a></li>
+					<li class="list-inline-item"><a href="#">忘记密码</a></li>
+				</ul>
 			</form>
 		</main>
 		<?php

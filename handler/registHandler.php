@@ -50,7 +50,7 @@ if(validateUsername($username) && validateQQ($QQ) && validatePassword($password)
 	$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
 	if($connection){
 		mysql_set_charset('utf8');
-		mysql_select_db("msyzlovewall", $connection);
+		mysql_select_db(DATABASE_NAME, $connection);
 		if(checkUsernameUnique($username)){
 			$md5_password = md5($password);
 			if(mysql_query("INSERT INTO user (username,password,QQ) VALUES ('$username','$md5_password', '$QQ')")){

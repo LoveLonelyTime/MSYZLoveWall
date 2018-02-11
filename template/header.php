@@ -1,9 +1,8 @@
-<?php include "setting/database.php"; ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<!-- Brand -->
 	<a class="navbar-brand" href="/index.php">
 		<img src="/img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="Logo"/>
-		密山一中表白墙 Love For You
+		密山一中表白墙
 	</a>
 	<!-- Toggler Button -->
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
@@ -31,14 +30,14 @@
 			$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
 			if($connection){
 				mysql_set_charset('utf8');
-				mysql_select_db("msyzlovewall", $connection);
+				mysql_select_db(DATABASE_NAME, $connection);
 				$id = $_SESSION['user'];
 				$result = mysql_query("SELECT username,header FROM user WHERE id = $id");
 				$row = mysql_fetch_array($result);
 				$username = $row['username'];
 				$header = $row['header'];
 			?>
-			<a class="mr-3" href="#">
+			<a class="mr-3" href="/user.php">
 				<img src=<?php echo $header; ?> alt="Header" class="rounded-circle" width="30" height="30"/>
 				<span><?php echo $username; ?></span>
 			</a>

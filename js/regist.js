@@ -102,8 +102,8 @@ function doRegist(){
 			},
 			success:function(json){
 				if(json.result === "success"){
-					showModal('注册成功','马上带你进入登录页面');
-					setTimeout("window.location.href = '/login.php'",3000);
+					showModal('注册成功','注册成功，1秒后带你进入登录页面');
+					setTimeout("window.location.href = '/login.php'",1000);
 				}else if(json.result === "input_error"){
 					showInvalid(json.field,json.description);
 				}else if(json.result === "error"){
