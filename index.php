@@ -8,7 +8,7 @@ include "setting/database.php";
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 		<!-- Simditor CSS -->
 		<link rel="stylesheet" href="/css/simditor.css"/>
 		<!-- Index CSS -->
@@ -24,6 +24,22 @@ include "setting/database.php";
 			<div class="my-3 p-3 bg-white rounded box-shadow">
 				<button type="button" class="btn btn-primary btn-lg btn-block" onclick="openPublishModal()">打开发布对话框</button>
 			</div>
+			<?php
+			$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
+			if($connection){
+				mysql_set_charset('utf8');
+				mysql_select_db(DATABASE_NAME, $connection);
+				$result = mysql_query("SELECT * FROM love_note ORDER BY date");
+				while($row = mysql_fetch_array($result)){
+			?>
+			<div class="my-3 p-3 bg-white rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+			</div>
+			<?php
+				}
+			}
+			mysql_close($connection);
+			?>
 		</main>
 		<?php
 		include "template/footer.php";
@@ -39,8 +55,21 @@ include "setting/database.php";
 						</button>
 					</div>
 					<div class="modal-body">
+						<div class="alert alert-danger" role="alert" style="display:none;">
+							发布失败
+							<button type="button" class="close" onclick="closeAlert()">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
 						<form>
-							<textarea id="editor" placeholder="Balabala" autofocus></textarea>
+							<div class="form-group">
+								<label for="objectInput">你要表白的对象：</label>
+							</div>
+							<textarea id="editor" placeholder="你想说什么？" autofocus></textarea>
+							<div class="custom-control custom-checkbox mt-3">
+								<input type="checkbox" class="custom-control-input" id="anonymousCheck">
+								<label class="custom-control-label" for="anonymousCheck">是否匿名，匿名之后该条表白不属于你且无法删除</label>
+							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
@@ -51,11 +80,11 @@ include "setting/database.php";
 			</div>
 		</div>
 		<!-- JQuery JavaScript -->
-		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<!-- Popper JavaScript -->
-		<script src="https://cdn.bootcss.com/popper.js/1.13.0/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<!-- Bootstrap JavaScript -->
-		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 		<!-- Module JavaScript -->
 		<script src="/js/module.js"></script>
 		<!-- Hotkeys JavaScript -->

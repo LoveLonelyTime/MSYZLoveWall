@@ -21,7 +21,7 @@ function outputUserCenter($id){
 <div class="my-3 p-3 bg-white rounded box-shadow">
 	<div class="row">
 		<div class="col-auto">
-			<img src=<?php echo $header; ?> alt="Header" class="border" id="headerImage" width="150" height="150"/>
+		<a href="javascript:showChangeHeaderModal()"><img src=<?php echo $header; ?> alt="Header" class="border" id="headerImage" width="150" height="150" data-toggle="tooltip" data-placement="top" title="点击更换头像"/></a>
 		</div>
 		<div class="col">
 			<h3>
@@ -258,7 +258,7 @@ function outputUser($id){
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 		<!-- User CSS -->
 		<link rel="stylesheet" href="/css/user.css"/>
 		<title>密山一中表白墙 用户中心</title>
@@ -289,12 +289,49 @@ function outputUser($id){
 		<?php
 		include "template/footer.php";
 		?>
+		<div class="modal fade" id="changeHeaderModal" tabindex="-1" role="dialog" aria-labelledby="changeHeaderModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changeHeaderModalTitle">更换头像</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="alert alert-danger" role="alert" style="display:none;">
+							发布失败
+							<button type="button" class="close" onclick="closeAlert()">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form>
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="upload-file"/>
+								<label class="custom-file-label" for="upload-file">选择图片</label>
+							</div>
+						</form>
+						<img src="/img/default_image.png" alt="showHeader" width="250" height="250" class="border" style="display:none;" id="showHeaderImg"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="doChangeHeader()">更换</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- JQuery JavaScript -->
-		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<!-- Popper JavaScript -->
-		<script src="https://cdn.bootcss.com/popper.js/1.13.0/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<!-- Bootstrap JavaScript -->
-		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<!-- Module JavaScript -->
+		<script src="/js/module.js"></script>
+		<!-- Uploader JavaScript -->
+		<script src="/js/uploader.js"></script>
+		<!-- User JavaScript -->
+		<script src="/js/user.js"></script>
 		<!-- Font Awesome JavaScript -->
 		<script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	</body>
