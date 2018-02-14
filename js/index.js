@@ -1,15 +1,3 @@
-var editor = new Simditor({
-	textarea: $('#editor'),
-	defaultImage: '/img/default_image.png',
-	upload:{
-		url:'/handler/imageUploadHandler.php',
-		params:null,
-		fileKey:'file',
-		connectionCount:3,
-		leaveConfirm:'图片上传中，你确定要离开吗？'
-	}
-});
-
 function openPublishModal(){
 	if(login){
 		$('#publishModal').modal();
@@ -28,15 +16,8 @@ function doPublish(){
 				anonymous:$('#anonymousCheck').prop('checked')?'true':'false',
 				html:editor.getValue()
 			},
-			success:function(json){
-				if(json.result === 'success'){
-					location.reload();
-				}else if(json.result === 'error'){
-					$('.alert').css('display','block');
-				}
-			},
-			error:function(){
-				$('.alert').css('display','block');
+			complete:function(){
+				location.reload();
 			}
 		});
 	}else{
@@ -44,39 +25,40 @@ function doPublish(){
 	}
 }
 
-function closeAlert(){
-	$('.alert').css('display','none');
-}
-
-  $(function () {
-            /*** 1.基本示例 ***/
-            var provinces = ["广东省", "海南省", "山西省", "山东省","湖北省", "湖南省", "陕西省", "上海市", "北京市", "广西省"];
-
-            var substringMatcher = function (strs) {
-                return function findMatches(q, cb) {
-                    var matches, substrRegex;
-                    matches = [];//定义字符串数组
-                    substrRegex = new RegExp(q, 'i');
-                    //用正则表达式来确定哪些字符串包含子串的'q'
-                    $.each(strs, function (i, str) {
-                    //遍历字符串池中的任何字符串
-                        if (substrRegex.test(str)) {
-                            matches.push({ value: str });
-                        }
-                    //包含子串的'q',将它添加到'match'
-                    });
-                    cb(matches);
-                };
-            };
-
-            $('#basic-example .typeahead').typeahead({
-                highlight: true,
-                minLength: 1
-            },
-            {
-                name: 'provinces',
-                displayKey: 'value',
-                source: substringMatcher(provinces)
-            });
-
-        });
+$(function(){
+	//Init Simditor
+	var editor = new Simditor({
+		textarea: $('#editor'),
+		defaultImage: '/img/default_image.png',
+		upload:{
+			url:'/handler/imageUploadHandler.php',
+			params:null,
+			fileKey:'file',
+			connectionCount:3,
+			leaveConfirm:'图片上传中，你确定要离开吗？'
+		}
+	});
+	//Init ObjectInput
+	$('#objectInput').autocomplete({
+		minLength:2,
+		source:function(request,response){
+			 $.ajax({
+				url:'/handler/searchUserHandler.php',
+				type:'GET',
+				dataType:'json',
+				data:{
+					term:request.term
+				},
+				success:function(data){
+					response(data);
+				}
+			});
+		},
+		select:function(event,ui){
+			$('#objectInput').val('@' + ui.item.username);
+			return false;
+		}
+	}).autocomplete('instance')._renderItem = function(ul, item){
+		return $('<li>').append('<div class="row"><div class="col-auto"><img src="'+ item.header +'" alt="Header" width="50" height="50" class="img-thumbnail"/></div><div class="col"><h5>'+ item.username +'</h5><h6 class="text-muted">'+ item.signature +'</h6></div></div>').appendTo(ul);
+	};
+});

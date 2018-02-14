@@ -29,27 +29,29 @@ function outputUserCenter($id){
 			echo $username;
 			if($sex == 0){
 			?>
-			<i class="fas fa-venus-mars text-muted"></i>
+			<a href="javascript:showChangeSexModal()" data-toggle="tooltip" data-placement="top" title="点击修改性别"><i class="fas fa-venus-mars text-muted"></i></a>
 			<?php
 			}else if($sex == 1){
 			?>	
-			<i class="fas fa-mars text-primary"></i>
+			<a href="javascript:showChangeSexModal()" data-toggle="tooltip" data-placement="top" title="点击修改性别"><i class="fas fa-mars text-primary"></i></a>
 			<?php
 			}else if($sex == 2){
 			?>	
-			<i class="fas fa-venus text-danger"></i>
+			<a href="javascript:showChangeSexModal()" data-toggle="tooltip" data-placement="top" title="点击修改性别"><i class="fas fa-venus text-danger"></i></a>
 			<?php
 			}
 			?>
 			</h3>
 			<h6 class="text-muted">
-			<?php 
+			<a href="javascript:showChangeValueModal('个性签名','doChangeSignature()')" data-toggle="tooltip" data-placement="right" title="点击修改个性签名" class="text-muted">
+			<?php
 			if(!empty($signature)){
 				echo $signature;
 			}else{
 				echo "这个人很懒，什么都没留下";
 			}
 			?>
+			</a>
 			</h6>
 		</div>
 	</div>
@@ -60,11 +62,11 @@ function outputUserCenter($id){
 	</ul>
 	<div class="border-right border-bottom border-left p-3">
 		<div>
-			<h6><i class="fas fa-tag text-success"></i> QQ号</h6>
+			<h6><i class="fas fa-tag text-success"></i> QQ号 <a href="javascript:showChangeValueModal('QQ号','doChangeQQ()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
 			<span class="pl-3"><?php echo $QQ; ?></span>
 		</div>
 		<div>
-			<h6><i class="fas fa-tag text-success"></i> 年级</h6>
+			<h6><i class="fas fa-tag text-success"></i> 年级 <a href="javascript:showChangeGradeModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
 			<span class="pl-3">
 			<?php
 			if($grade == 0){
@@ -88,7 +90,7 @@ function outputUserCenter($id){
 			</span>
 		</div>
 		<div>
-			<h6><i class="fas fa-tag text-success"></i> 班级</h6>
+			<h6><i class="fas fa-tag text-success"></i> 班级 <a href="javascript:showChangeClassModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
 			<span class="pl-3">
 			<?php
 			if($class == 0){
@@ -102,7 +104,7 @@ function outputUserCenter($id){
 			</span>
 		</div>
 		<div>
-			<h6><i class="fas fa-tag text-success"></i> 真实姓名</h6>
+			<h6><i class="fas fa-tag text-success"></i> 真实姓名 <a href="javascript:showChangeValueModal('真实姓名','doChangeRealName()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
 			<span class="pl-3">
 			<?php
 			if(empty($real_name)){
@@ -299,12 +301,6 @@ function outputUser($id){
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="alert alert-danger" role="alert" style="display:none;">
-							发布失败
-							<button type="button" class="close" onclick="closeAlert()">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
 						<form>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" id="upload-file"/>
@@ -316,6 +312,121 @@ function outputUser($id){
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" onclick="doChangeHeader()">更换</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="changeSexModal" tabindex="-1" role="dialog" aria-labelledby="changeSexModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changeSexModalTitle">更换性别</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<select class="custom-select" id="sexSelect">
+								<option value="0" selected>保密</option>
+								<option value="1">男</option>
+								<option value="2">女</option>
+							</select>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="doChangeSex()">更换</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="changeValueModal" tabindex="-1" role="dialog" aria-labelledby="changeValueModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changeValueModalTitle"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<input type="text" class="form-control" id="valueInput"/>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" id="valueButton">更换</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="changeGradeModal" tabindex="-1" role="dialog" aria-labelledby="changeGradeModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changeGradeModalTitle">更换年级</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<select class="custom-select" id="gradeSelect">
+								<option value="0" selected>保密</option>
+								<option value="1">高一</option>
+								<option value="2">高二</option>
+								<option value="3">高三</option>
+							</select>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="doChangeGrade()">更换</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="changeClassModal" tabindex="-1" role="dialog" aria-labelledby="changeClassModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changeClassModalTitle">更换班级</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<select class="custom-select" id="classSelect">
+								<option value="0" selected>保密</option>
+								<option value="1">1班</option>
+								<option value="2">2班</option>
+								<option value="3">3班</option>
+								<option value="4">4班</option>
+								<option value="5">5班</option>
+								<option value="6">6班</option>
+								<option value="7">7班</option>
+								<option value="8">8班</option>
+								<option value="9">9班</option>
+								<option value="10">10班</option>
+								<option value="11">11班</option>
+								<option value="12">12班</option>
+								<option value="13">13班</option>
+								<option value="14">14班</option>
+								<option value="15">15班</option>
+								<option value="16">16班</option>
+								<option value="17">17班</option>
+								<option value="18">18班</option>
+								<option value="19">19班</option>
+								<option value="20">20班</option>
+							</select>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="doChangeClass()">更换</button>
 					</div>
 				</div>
 			</div>

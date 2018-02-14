@@ -18,7 +18,7 @@
 				<a class="nav-link color-transition" href="#"><i class="fas fa-moon"></i>深夜说</a>
 			</li>
 			<li class="nav-item <?php if(defined("INDEX_ABOUT")){echo "active";} ?>">
-				<a class="nav-link color-transition" href="#"><i class="fas fa-at"></i>关于TA</a>
+				<a class="nav-link color-transition" href="/about.php"><i class="fas fa-at"></i>关于我们</a>
 			</li>
 		</ul>
 		<?php 
