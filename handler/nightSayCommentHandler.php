@@ -3,20 +3,15 @@ session_start();
 include "../setting/database.php";
 header('Content-Type:application/json');
 if(isset($_SESSION["user"])){
-	$html = $_POST["html"];
-	$object = $_POST["object"];
-	$anonymous = $_POST["anonymous"];
-	if((!empty($html)) && (!empty($object))){
+	$content = $_POST["content"];
+	$night_say_id = $_POST["night_say_id"];
+	if((!empty($content)) && (!empty($night_say_id))){
 		$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
 		if($connection){
 			mysql_set_charset('utf8');
 			mysql_select_db(DATABASE_NAME, $connection);
-			if((!empty($anonymous)) && $anonymous == "true"){
-				mysql_query("INSERT INTO love_note (content,object) VALUES ('$html','$object')");
-			}else{
-				$id = $_SESSION["user"];
-				mysql_query("INSERT INTO love_note (content,user_id,object) VALUES ('$html',$id,'$object')");
-			}
+			$id = $_SESSION["user"];
+			mysql_query("INSERT INTO night_say_comment (content,user_id,night_say_id) VALUES ('$content',$id,'$night_say_id')");
 			echo json_encode(array("result" => "success"));
 		}else{
 			echo json_encode(array("result" => "error","description" => "数据库连接失败"));

@@ -15,7 +15,7 @@
 				<a class="nav-link color-transition" href="/index.php"><i class="fas fa-heart"></i>表白墙</a>
 			</li>
 			<li class="nav-item <?php if(defined("INDEX_NIGHT_SAY")){echo "active";} ?>">
-				<a class="nav-link color-transition" href="#"><i class="fas fa-moon"></i>深夜说</a>
+				<a class="nav-link color-transition" href="/night_say.php"><i class="fas fa-moon"></i>深夜说</a>
 			</li>
 			<li class="nav-item <?php if(defined("INDEX_ABOUT")){echo "active";} ?>">
 				<a class="nav-link color-transition" href="/about.php"><i class="fas fa-at"></i>关于我们</a>
@@ -38,7 +38,7 @@
 				$header = $row['header'];
 			?>
 			<a class="mr-3" href="/user.php">
-				<img src=<?php echo $header; ?> alt="Header" class="rounded-circle" width="30" height="30"/>
+				<img src="<?php echo $header; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
 				<span><?php echo $username; ?></span>
 			</a>
 			<?php

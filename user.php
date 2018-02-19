@@ -1,6 +1,15 @@
 <?php
 session_start();
 include "setting/database.php";
+function getUserByID($id){
+	return mysql_fetch_array(mysql_query("SELECT * FROM user WHERE id = $id"));
+}
+function isUserExistByUsername($username){
+	return mysql_num_rows(mysql_query("SELECT * FROM user WHERE username = '$username'")) != 0;
+}
+function getUserByUsername($username){
+	return mysql_fetch_array(mysql_query("SELECT * FROM user WHERE username = '$username'"));
+}
 function outputUserCenter($id){
 	$connection = mysql_connect(DATABASE_SERVER_NAME,DATABASE_USERNAME,DATABASE_PASSWORD);
 	if($connection){
@@ -55,67 +64,231 @@ function outputUserCenter($id){
 			</h6>
 		</div>
 	</div>
-	<ul class="nav nav-tabs mt-3">
-		<li class="nav-item">
-			<a class="nav-link active" href="javascript:void(0)">个人资料</a>
-		</li>
-	</ul>
-	<div class="border-right border-bottom border-left p-3">
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> QQ号 <a href="javascript:showChangeValueModal('QQ号','doChangeQQ()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
-			<span class="pl-3"><?php echo $QQ; ?></span>
+	<div id="tabs" class="mt-3">
+		<ul>
+			<li><a href="#information">个人资料</a></li>
+			<li><a href="#publish">表白TA</a></li>
+			<li><a href="#metion">被TA表白</a></li>
+		</ul>
+		<div id="information">
+			<p>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> QQ号 <a href="javascript:showChangeValueModal('QQ号','doChangeQQ()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
+					<span class="pl-3"><?php echo $QQ; ?></span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 年级 <a href="javascript:showChangeGradeModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
+					<span class="pl-3">
+					<?php
+					if($grade == 0){
+					?>
+					保密
+					<?php
+					}else if($grade == 1){
+					?>
+					高一
+					<?php
+					}else if($grade == 2){
+					?>
+					高二
+					<?php	
+					}else if($grade == 3){
+					?>
+					高三
+					<?php	
+					}
+					?>
+					</span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 班级 <a href="javascript:showChangeClassModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
+					<span class="pl-3">
+					<?php
+					if($class == 0){
+					?>
+					保密
+					<?php	
+					}else{
+						echo $class."班";
+					}
+					?>
+					</span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 真实姓名 <a href="javascript:showChangeValueModal('真实姓名','doChangeRealName()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
+					<span class="pl-3">
+					<?php
+					if(empty($real_name)){
+					?>
+					保密
+					<?php	
+					}else{
+						echo $real_name;
+					}
+					?>
+					</span>
+				</div>
+			</p>
 		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 年级 <a href="javascript:showChangeGradeModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
-			<span class="pl-3">
-			<?php
-			if($grade == 0){
-			?>
-			保密
-			<?php
-			}else if($grade == 1){
-			?>
-			高一
-			<?php
-			}else if($grade == 2){
-			?>
-			高二
-			<?php	
-			}else if($grade == 3){
-			?>
-			高三
-			<?php	
-			}
-			?>
-			</span>
+		<div id="publish">
+			<p>
+				<?php
+				$love_note_result = mysql_query("SELECT * FROM love_note WHERE user_id = $id ORDER BY date DESC");
+				while($love_note_row = mysql_fetch_array($love_note_result)){
+				?>
+				<div class="my-3 p-3 bg-light rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<div class="row">
+						<div class="col">
+							<?php
+							if(!empty($love_note_row["user_id"])){
+								$user = getUserByID($love_note_row["user_id"]);
+							?>
+							<a href="/user.php?id=<?php echo $user["id"]; ?>">
+								<img src="<?php echo $user["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $user["username"]; ?></span>
+							</a>
+							<?php
+							}else{
+							?>
+							<img src="/img/anonymous_header.jpg" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span>匿名用户</span>
+							<?php
+							}
+							?>
+							<i class="fas fa-heartbeat text-danger"></i>
+							<?php
+							if(substr($love_note_row["object"], 0, 1) == "@"){
+								if(isUserExistByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1))){
+									$object = getUserByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1));
+							?>
+							<a href="/user.php?id=<?php echo $object["id"]; ?>">
+								<img src="<?php echo $object["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $object["username"]; ?></span>
+							</a>
+							<?php
+								}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+								}
+							}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+							}
+							?>
+						</div>
+						<div class="col">
+							<div class="text-right text-muted"><?php echo $love_note_row["date"]; ?></div>
+						</div>
+					</div>
+				</h6>
+				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<?php echo $love_note_row["content"]; ?>
+				</div>
+				<div class="media-body pb-3 mb-0 small lh-125">
+					<?php
+					$comment_id = $love_note_row["id"];
+					$comment_love_note_result = mysql_query("SELECT love_note_comment.user_id,love_note_comment.content,user.username,user.header FROM love_note_comment LEFT JOIN user ON user.id = love_note_comment.user_id WHERE love_note_comment.love_note_id = $comment_id");
+					while($comment_row = mysql_fetch_array($comment_love_note_result)){
+					?>
+					<div class="mt-1">
+						<a href="/user.php?id=<?php echo $comment_row["user_id"]; ?>">
+							<img src="<?php echo $comment_row["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span><?php echo $comment_row["username"]; ?></span>
+						</a>
+						<span>：<?php echo $comment_row["content"]; ?></span>
+					</div>
+					<?php
+					}
+					?>
+				</div>
+			</div>
+				<?php
+				}
+				?>
+			</p>
 		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 班级 <a href="javascript:showChangeClassModal()"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
-			<span class="pl-3">
-			<?php
-			if($class == 0){
-			?>
-			保密
-			<?php	
-			}else{
-				echo $class."班";
-			}
-			?>
-			</span>
-		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 真实姓名 <a href="javascript:showChangeValueModal('真实姓名','doChangeRealName()')"><i class="fas fa-pencil-alt text-primary"></i></a></h6>
-			<span class="pl-3">
-			<?php
-			if(empty($real_name)){
-			?>
-			保密
-			<?php	
-			}else{
-				echo $real_name;
-			}
-			?>
-			</span>
+		<div id="metion">
+			<p>
+				<?php
+				$love_note_result = mysql_query("SELECT * FROM love_note WHERE object = '@$username' ORDER BY date DESC");
+				while($love_note_row = mysql_fetch_array($love_note_result)){
+				?>
+				<div class="my-3 p-3 bg-light rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<div class="row">
+						<div class="col">
+							<?php
+							if(!empty($love_note_row["user_id"])){
+								$user = getUserByID($love_note_row["user_id"]);
+							?>
+							<a href="/user.php?id=<?php echo $user["id"]; ?>">
+								<img src="<?php echo $user["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $user["username"]; ?></span>
+							</a>
+							<?php
+							}else{
+							?>
+							<img src="/img/anonymous_header.jpg" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span>匿名用户</span>
+							<?php
+							}
+							?>
+							<i class="fas fa-heartbeat text-danger"></i>
+							<?php
+							if(substr($love_note_row["object"], 0, 1) == "@"){
+								if(isUserExistByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1))){
+									$object = getUserByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1));
+							?>
+							<a href="/user.php?id=<?php echo $object["id"]; ?>">
+								<img src="<?php echo $object["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $object["username"]; ?></span>
+							</a>
+							<?php
+								}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+								}
+							}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+							}
+							?>
+						</div>
+						<div class="col">
+							<div class="text-right text-muted"><?php echo $love_note_row["date"]; ?></div>
+						</div>
+					</div>
+				</h6>
+				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<?php echo $love_note_row["content"]; ?>
+				</div>
+				<div class="media-body pb-3 mb-0 small lh-125">
+					<?php
+					$comment_id = $love_note_row["id"];
+					$comment_love_note_result = mysql_query("SELECT love_note_comment.user_id,love_note_comment.content,user.username,user.header FROM love_note_comment LEFT JOIN user ON user.id = love_note_comment.user_id WHERE love_note_comment.love_note_id = $comment_id");
+					while($comment_row = mysql_fetch_array($comment_love_note_result)){
+					?>
+					<div class="mt-1">
+						<a href="/user.php?id=<?php echo $comment_row["user_id"]; ?>">
+							<img src="<?php echo $comment_row["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span><?php echo $comment_row["username"]; ?></span>
+						</a>
+						<span>：<?php echo $comment_row["content"]; ?></span>
+					</div>
+					<?php
+					}
+					?>
+				</div>
+			</div>
+				<?php
+				}
+				?>
+			</p>
 		</div>
 	</div>
 </div>
@@ -180,67 +353,231 @@ function outputUser($id){
 			</h6>
 		</div>
 	</div>
-	<ul class="nav nav-tabs mt-3">
-		<li class="nav-item">
-			<a class="nav-link active" href="javascript:void(0)">个人资料</a>
-		</li>
-	</ul>
-	<div class="border-right border-bottom border-left p-3">
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> QQ号</h6>
-			<span class="pl-3"><?php echo $QQ; ?></span>
+	<div id="tabs" class="mt-3">
+		<ul>
+			<li><a href="#information">个人资料</a></li>
+			<li><a href="#publish">表白TA</a></li>
+			<li><a href="#metion">被TA表白</a></li>
+		</ul>
+		<div id="information">
+			<p>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> QQ号</h6>
+					<span class="pl-3"><?php echo $QQ; ?></span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 年级</h6>
+					<span class="pl-3">
+					<?php
+					if($grade == 0){
+					?>
+					保密
+					<?php
+					}else if($grade == 1){
+					?>
+					高一
+					<?php
+					}else if($grade == 2){
+					?>
+					高二
+					<?php	
+					}else if($grade == 3){
+					?>
+					高三
+					<?php	
+					}
+					?>
+					</span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 班级</h6>
+					<span class="pl-3">
+					<?php
+					if($class == 0){
+					?>
+					保密
+					<?php	
+					}else{
+						echo $class."班";
+					}
+					?>
+					</span>
+				</div>
+				<div>
+					<h6><i class="fas fa-tag text-success"></i> 真实姓名</h6>
+					<span class="pl-3">
+					<?php
+					if(empty($real_name)){
+					?>
+					保密
+					<?php	
+					}else{
+						echo $real_name;
+					}
+					?>
+					</span>
+				</div>
+			</p>
 		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 年级</h6>
-			<span class="pl-3">
-			<?php
-			if($grade == 0){
-			?>
-			保密
-			<?php
-			}else if($grade == 1){
-			?>
-			高一
-			<?php
-			}else if($grade == 2){
-			?>
-			高二
-			<?php	
-			}else if($grade == 3){
-			?>
-			高三
-			<?php	
-			}
-			?>
-			</span>
+		<div id="publish">
+			<p>
+				<?php
+				$love_note_result = mysql_query("SELECT * FROM love_note WHERE user_id = $id ORDER BY date DESC");
+				while($love_note_row = mysql_fetch_array($love_note_result)){
+				?>
+				<div class="my-3 p-3 bg-light rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<div class="row">
+						<div class="col">
+							<?php
+							if(!empty($love_note_row["user_id"])){
+								$user = getUserByID($love_note_row["user_id"]);
+							?>
+							<a href="/user.php?id=<?php echo $user["id"]; ?>">
+								<img src="<?php echo $user["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $user["username"]; ?></span>
+							</a>
+							<?php
+							}else{
+							?>
+							<img src="/img/anonymous_header.jpg" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span>匿名用户</span>
+							<?php
+							}
+							?>
+							<i class="fas fa-heartbeat text-danger"></i>
+							<?php
+							if(substr($love_note_row["object"], 0, 1) == "@"){
+								if(isUserExistByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1))){
+									$object = getUserByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1));
+							?>
+							<a href="/user.php?id=<?php echo $object["id"]; ?>">
+								<img src="<?php echo $object["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $object["username"]; ?></span>
+							</a>
+							<?php
+								}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+								}
+							}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+							}
+							?>
+						</div>
+						<div class="col">
+							<div class="text-right text-muted"><?php echo $love_note_row["date"]; ?></div>
+						</div>
+					</div>
+				</h6>
+				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<?php echo $love_note_row["content"]; ?>
+				</div>
+				<div class="media-body pb-3 mb-0 small lh-125">
+					<?php
+					$comment_id = $love_note_row["id"];
+					$comment_love_note_result = mysql_query("SELECT love_note_comment.user_id,love_note_comment.content,user.username,user.header FROM love_note_comment LEFT JOIN user ON user.id = love_note_comment.user_id WHERE love_note_comment.love_note_id = $comment_id");
+					while($comment_row = mysql_fetch_array($comment_love_note_result)){
+					?>
+					<div class="mt-1">
+						<a href="/user.php?id=<?php echo $comment_row["user_id"]; ?>">
+							<img src="<?php echo $comment_row["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span><?php echo $comment_row["username"]; ?></span>
+						</a>
+						<span>：<?php echo $comment_row["content"]; ?></span>
+					</div>
+					<?php
+					}
+					?>
+				</div>
+			</div>
+				<?php
+				}
+				?>
+			</p>
 		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 班级</h6>
-			<span class="pl-3">
-			<?php
-			if($class == 0){
-			?>
-			保密
-			<?php	
-			}else{
-				echo $class."班";
-			}
-			?>
-			</span>
-		</div>
-		<div>
-			<h6><i class="fas fa-tag text-success"></i> 真实姓名</h6>
-			<span class="pl-3">
-			<?php
-			if(empty($real_name)){
-			?>
-			保密
-			<?php	
-			}else{
-				echo $real_name;
-			}
-			?>
-			</span>
+		<div id="metion">
+			<p>
+				<?php
+				$love_note_result = mysql_query("SELECT * FROM love_note WHERE object = '@$username' ORDER BY date DESC");
+				while($love_note_row = mysql_fetch_array($love_note_result)){
+				?>
+				<div class="my-3 p-3 bg-light rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<div class="row">
+						<div class="col">
+							<?php
+							if(!empty($love_note_row["user_id"])){
+								$user = getUserByID($love_note_row["user_id"]);
+							?>
+							<a href="/user.php?id=<?php echo $user["id"]; ?>">
+								<img src="<?php echo $user["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $user["username"]; ?></span>
+							</a>
+							<?php
+							}else{
+							?>
+							<img src="/img/anonymous_header.jpg" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span>匿名用户</span>
+							<?php
+							}
+							?>
+							<i class="fas fa-heartbeat text-danger"></i>
+							<?php
+							if(substr($love_note_row["object"], 0, 1) == "@"){
+								if(isUserExistByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1))){
+									$object = getUserByUsername(substr($love_note_row["object"],1, strlen($love_note_row["object"])-1));
+							?>
+							<a href="/user.php?id=<?php echo $object["id"]; ?>">
+								<img src="<?php echo $object["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+								<span><?php echo $object["username"]; ?></span>
+							</a>
+							<?php
+								}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+								}
+							}else{
+							?>
+							<span><?php echo $love_note_row["object"]; ?></span>
+							<?php
+							}
+							?>
+						</div>
+						<div class="col">
+							<div class="text-right text-muted"><?php echo $love_note_row["date"]; ?></div>
+						</div>
+					</div>
+				</h6>
+				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<?php echo $love_note_row["content"]; ?>
+				</div>
+				<div class="media-body pb-3 mb-0 small lh-125">
+					<?php
+					$comment_id = $love_note_row["id"];
+					$comment_love_note_result = mysql_query("SELECT love_note_comment.user_id,love_note_comment.content,user.username,user.header FROM love_note_comment LEFT JOIN user ON user.id = love_note_comment.user_id WHERE love_note_comment.love_note_id = $comment_id");
+					while($comment_row = mysql_fetch_array($comment_love_note_result)){
+					?>
+					<div class="mt-1">
+						<a href="/user.php?id=<?php echo $comment_row["user_id"]; ?>">
+							<img src="<?php echo $comment_row["header"]; ?>" alt="Header" class="rounded-circle" width="30" height="30"/>
+							<span><?php echo $comment_row["username"]; ?></span>
+						</a>
+						<span>：<?php echo $comment_row["content"]; ?></span>
+					</div>
+					<?php
+					}
+					?>
+				</div>
+			</div>
+				<?php
+				}
+				?>
+			</p>
 		</div>
 	</div>
 </div>
@@ -260,9 +597,13 @@ function outputUser($id){
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+		<!-- JQuery UI CSS -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 		<!-- User CSS -->
 		<link rel="stylesheet" href="/css/user.css"/>
+		<!-- Baidu -->
+		<?php include "template/baidu.html"; ?>
 		<title>密山一中表白墙 用户中心</title>
 	</head>
 	<body class="bg-light">
@@ -289,7 +630,7 @@ function outputUser($id){
 		?>
 		</main>
 		<?php
-		include "template/footer.php";
+		include "template/footer.html";
 		?>
 		<div class="modal fade" id="changeHeaderModal" tabindex="-1" role="dialog" aria-labelledby="changeHeaderModalTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -432,11 +773,13 @@ function outputUser($id){
 			</div>
 		</div>
 		<!-- JQuery JavaScript -->
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<!-- Popper JavaScript -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 		<!-- Bootstrap JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<!-- JQuery UI JavaScript -->
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 		<!-- Module JavaScript -->
 		<script src="/js/module.js"></script>
 		<!-- Uploader JavaScript -->

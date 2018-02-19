@@ -1,64 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="360px"
-	 height="360px" viewBox="0 0 360 360" enable-background="new 0 0 360 360" xml:space="preserve">
-<g id="图层_4">
-	<path fill="#5E9C33" d="M360,303.307C360,334.617,334.617,360,303.307,360H56.693C25.382,360,0,334.617,0,303.307V56.693
-		C0,25.382,25.382,0,56.693,0h246.613C334.617,0,360,25.382,360,56.693V303.307z"/>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px"
+	 height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
+<g id="背景">
+	<path fill="#DA7781" d="M256,206c0,27.614-22.387,50-50,50H50c-27.615,0-50-22.386-50-50V50C0,22.386,22.385,0,50,0h156
+		c27.613,0,50,22.386,50,50V206z"/>
 </g>
-<g id="坐标系">
-</g>
-<g id="心形">
+<g id="Logo">
 	<g>
+		<path fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" d="M175.076,51.5
+			c26.021,0,47.078,21.056,47.078,47.077c0,58.546-82.385,105.922-94.154,105.922S33.846,157.124,33.846,98.578
+			c0-26.021,21.056-47.077,47.077-47.078C106.943,51.5,128,72.556,128,98.577C128,72.556,149.057,51.5,175.076,51.5z"/>
+		<polyline fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" points="47.308,66.539 128,147.229 
+			208.693,66.539 		"/>
 		<g>
-			<g>
-				<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="50.827" x2="180" y2="324"/>
-				<g>
-					<polygon fill="#FFFFFF" points="180,36 171.462,56.894 180,51.936 188.535,56.894 					"/>
-				</g>
-			</g>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" x1="189.896" y1="164.59" x2="150.691" y2="125.386"/>
+			
+				<line fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" x1="105.307" y1="125.385" x2="66.103" y2="164.59"/>
 		</g>
-		<g>
-			<g>
-				<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="309.173" y1="180" x2="36" y2="180"/>
-				<g>
-					<polygon fill="#FFFFFF" points="324,180 303.106,171.462 308.064,180 303.106,188.535 					"/>
-				</g>
-			</g>
-		</g>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="196" y1="180" x2="196" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="212" y1="180" x2="212" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="228" y1="180" x2="228" y2="164"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="244" y1="180" x2="244" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="260" y1="180" x2="260" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="276" y1="180" x2="276" y2="164"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="292" y1="180" x2="292" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="52" y1="180" x2="52" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="68" y1="180" x2="68" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="84" y1="180" x2="84" y2="164"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="100" y1="180" x2="100" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="116" y1="180" x2="116" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="132" y1="180" x2="132" y2="164"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="148" y1="180" x2="148" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="164" y1="180" x2="164" y2="172"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="196" x2="188" y2="196"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="212" x2="188" y2="212"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="228" x2="196" y2="228"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="244" x2="188" y2="244"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="260" x2="188" y2="260"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="276" x2="196" y2="276"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="292" x2="188" y2="292"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="308" x2="188" y2="308"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="68" x2="188" y2="68"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="84" x2="196" y2="84"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="100" x2="188" y2="100"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="116" x2="188" y2="116"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="132" x2="196" y2="132"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="148" x2="188" y2="148"/>
-		<line fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" x1="180" y1="164" x2="188" y2="164"/>
-		<path fill="none" stroke="#FFFFFF" stroke-width="7" stroke-miterlimit="10" d="M244,68c-35.375,0-64,28.625-64,64
-			c0-35.375-28.625-64-64-64s-64,28.625-64,64c0,88.438,128,128,128,160c0-32,128-71.563,128-160C308,96.625,279.375,68,244,68z"/>
 	</g>
 </g>
 </svg>
