@@ -48,6 +48,7 @@ if(isset($_SESSION["user"])){
 		if($connection){
 			mysql_set_charset('utf8');
 			mysql_select_db(DATABASE_NAME, $connection);
+			mysql_query("SET time_zone = '+8:00'");
 			if($category == "header"){
 				if(!empty($newInformation)){
 					mysql_query("UPDATE user SET header = '$newInformation' WHERE id = $id");

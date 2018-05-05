@@ -15,6 +15,7 @@ function outputUserCenter($id){
 	if($connection){
 		mysql_set_charset('utf8');
 		mysql_select_db(DATABASE_NAME, $connection);
+		mysql_query("SET time_zone = '+8:00'");
 		$result = mysql_query("SELECT * FROM user WHERE id = $id");
 		if(mysql_num_rows($result)!=0){
 			$row = mysql_fetch_array($result);
@@ -306,6 +307,7 @@ function outputUser($id){
 	if($connection){
 		mysql_set_charset('utf8');
 		mysql_select_db(DATABASE_NAME, $connection);
+		mysql_query("SET time_zone = '+8:00'");
 		$result = mysql_query("SELECT * FROM user WHERE id = $id");
 		if(mysql_num_rows($result)!=0){
 			$row = mysql_fetch_array($result);
@@ -596,6 +598,7 @@ function outputUser($id){
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="shortcut icon" href=" /favicon.ico"/>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 		<!-- JQuery UI CSS -->
@@ -604,6 +607,8 @@ function outputUser($id){
 		<link rel="stylesheet" href="/css/user.css"/>
 		<!-- Baidu -->
 		<?php include "template/baidu.html"; ?>
+		<!-- Google AD -->
+		<?php include "template/google.html"; ?>
 		<title>密山一中表白墙 用户中心</title>
 	</head>
 	<body class="bg-light">

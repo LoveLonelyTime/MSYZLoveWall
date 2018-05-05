@@ -1,6 +1,10 @@
 <?php
+//define("DATABASE_SERVER_NAME","localhost:3306");
+//define("DATABASE_USERNAME","root");
+//define("DATABASE_PASSWORD","jwc5285998");
+//define("DATABASE_NAME","msyzlovewall");
 define("DATABASE_SERVER_NAME","localhost:3306");
-define("DATABASE_USERNAME","root");
-define("DATABASE_PASSWORD","jwc5285998");
-define("DATABASE_NAME","msyzlovewall");
+define("DATABASE_USERNAME","ilovemsy_webmaster");
+define("DATABASE_PASSWORD","jwc5285998jwc");
+define("DATABASE_NAME","ilovemsy_ilovemsyz");
 ?>

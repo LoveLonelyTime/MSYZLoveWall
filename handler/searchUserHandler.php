@@ -7,6 +7,7 @@ if(!empty($term)){
 	if($connection){
 		mysql_set_charset('utf8');
 		mysql_select_db(DATABASE_NAME, $connection);
+		mysql_query("SET time_zone = '+8:00'");
 		$result = mysql_query("SELECT username,header,signature,real_name FROM user WHERE username LIKE '%$term%' OR real_name LIKE '%$term%'");
 		$array = array();
 		while($row = mysql_fetch_array($result)){

@@ -21,6 +21,7 @@ function isUserExistByUsername($username){
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="shortcut icon" href=" /favicon.ico"/>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 		<!-- JQuery UI CSS -->
@@ -31,6 +32,8 @@ function isUserExistByUsername($username){
 		<link rel="stylesheet" href="/css/index.css"/>
 		<!-- Baidu -->
 		<?php include "template/baidu.html"; ?>
+		<!-- Google AD -->
+		<?php include "template/google.html"; ?>
 		<title>密山一中表白墙 Love For You</title>
 	</head>
 	<body class="bg-light">
@@ -70,6 +73,7 @@ function isUserExistByUsername($username){
 			if($connection){
 				mysql_set_charset('utf8');
 				mysql_select_db(DATABASE_NAME, $connection);
+				mysql_query("SET time_zone = '+8:00'");
 				$result = mysql_query("SELECT * FROM love_note ORDER BY date DESC LIMIT " . ($page-1)*PAGE_SIZE . "," . PAGE_SIZE);
 				while($row = mysql_fetch_array($result)){
 			?>
@@ -116,7 +120,7 @@ function isUserExistByUsername($username){
 							}
 							?>
 						</div>
-						<div class="col">
+						<div class="col-auto d-none d-md-block">
 							<div class="text-right text-muted"><?php echo $row["date"]; ?></div>
 						</div>
 					</div>
@@ -161,6 +165,7 @@ function isUserExistByUsername($username){
 		if($connection){
 			mysql_set_charset('utf8');
 			mysql_select_db(DATABASE_NAME, $connection);
+			mysql_query("SET time_zone = '+8:00'");
 			$total_data = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM love_note"))[0];
 			$total_page =ceil($total_data/PAGE_SIZE);
 			$page_offset=(PAGINATION_SIZE-1)/2;

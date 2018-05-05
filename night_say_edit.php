@@ -7,6 +7,7 @@ include "setting/database.php";
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="shortcut icon" href=" /favicon.ico"/>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 		<!-- Simditor CSS -->
@@ -27,6 +28,7 @@ include "setting/database.php";
 				if($connection){
 					mysql_set_charset('utf8');
 					mysql_select_db(DATABASE_NAME, $connection);
+					mysql_query("SET time_zone = '+8:00'");
 					$id = $_SESSION["user"];
 					$result = mysql_query("SELECT * FROM user WHERE id = $id");
 					if(mysql_num_rows($result)!=0){

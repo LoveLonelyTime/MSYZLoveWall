@@ -11,6 +11,7 @@ if(isset($_SESSION["user"])){
 		if($connection){
 			mysql_set_charset('utf8');
 			mysql_select_db(DATABASE_NAME, $connection);
+			mysql_query("SET time_zone = '+8:00'");
 			if((!empty($anonymous)) && $anonymous == "true"){
 				mysql_query("INSERT INTO love_note (content,object) VALUES ('$html','$object')");
 			}else{

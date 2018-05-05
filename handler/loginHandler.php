@@ -36,6 +36,7 @@ if(validateUsername($username) && validatePassword($password)){
 	if($connection){
 		mysql_set_charset('utf8');
 		mysql_select_db(DATABASE_NAME, $connection);
+		mysql_query("SET time_zone = '+8:00'");
 		$md5_password = md5($password);
 		$result = mysql_query("SELECT id,password FROM user WHERE username = '$username'");
 		$row = mysql_fetch_array($result);

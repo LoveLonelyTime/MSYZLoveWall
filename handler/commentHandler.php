@@ -10,6 +10,7 @@ if(isset($_SESSION["user"])){
 		if($connection){
 			mysql_set_charset('utf8');
 			mysql_select_db(DATABASE_NAME, $connection);
+			mysql_query("SET time_zone = '+8:00'");
 			$id = $_SESSION["user"];
 			mysql_query("INSERT INTO love_note_comment (content,user_id,love_note_id) VALUES ('$content',$id,'$love_note_id')");
 			echo json_encode(array("result" => "success"));

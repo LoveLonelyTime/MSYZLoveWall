@@ -31,6 +31,7 @@
 			if($connection){
 				mysql_set_charset('utf8');
 				mysql_select_db(DATABASE_NAME, $connection);
+				mysql_query("SET time_zone = '+8:00'");
 				$id = $_SESSION['user'];
 				$result = mysql_query("SELECT username,header FROM user WHERE id = $id");
 				$row = mysql_fetch_array($result);

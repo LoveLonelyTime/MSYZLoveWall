@@ -13,10 +13,13 @@ if(!empty($_GET["date"])){
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="shortcut icon" href=" /favicon.ico"/>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 		<!-- Baidu -->
 		<?php include "template/baidu.html"; ?>
+		<!-- Google AD -->
+		<?php include "template/google.html"; ?>
 		<title>密山一中表白墙 深夜说</title>
 	</head>
 	<body class="bg-light">
@@ -29,21 +32,22 @@ if(!empty($_GET["date"])){
 			if($connection){
 				mysql_set_charset('utf8');
 				mysql_select_db(DATABASE_NAME, $connection);
+				mysql_query("SET time_zone = '+8:00'");
 				$date = date("Y-m-d",$now);
 				$result = mysql_query("SELECT * FROM night_say WHERE to_days(date) = to_days('$date')");
 		?>
 		<nav class="mt-3">
-			<ul class="pagination justify-content-center pagination-lg">
-				<li class="page-item"><a class="page-link" href="?date=<?php echo $now - 3600*24; ?>">&laquo; 上一天</a></li>
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><a class="page-link" href="?date=<?php echo $now - 3600*24; ?>">上一天</a></li>
 				<li class="page-item disabled"><a class="page-link" href="javascropt:void(0)"><?php echo date("m月d日",$now); ?></a></li>
-				<li class="page-item"><a class="page-link" href="?date=<?php echo $now + 3600*24; ?>">下一天 &raquo;</a></li>
+				<li class="page-item"><a class="page-link" href="?date=<?php echo $now + 3600*24; ?>">下一天</a></li>
 			</ul>
 		</nav>
 		<main class="container">
 			<?php
 			if(mysql_num_rows($result) == 0){
 			?>
-			<h1 class="text-center">该日还没有任何内容,你可以为我们投稿<h1>
+			<h1 class="text-center">该日还没有任何内容,你可以为我们投稿</h1>
 			<?php
 			}else{
 				$row = mysql_fetch_array($result);
